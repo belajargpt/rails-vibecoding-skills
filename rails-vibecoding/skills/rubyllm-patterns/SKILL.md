@@ -5,92 +5,205 @@ description: Use when integrating LLM APIs (Claude, OpenAI, Gemini) in Rails app
 
 # RubyLLM Patterns
 
+> Verified against official docs at https://rubyllm.com/ — ruby_llm gem.
+
 ## Philosophy
 
 > One interface, all providers. No Net::HTTP plumbing. Cost-aware by default.
 
-RubyLLM gem abstracts LLM APIs behind a single interface:
-- Claude (Anthropic)
-- OpenAI (GPT-4, GPT-5, etc.)
-- Gemini (Google)
-- Swap provider = change one line
+RubyLLM gem abstracts LLM APIs behind a single interface: Claude (Anthropic), OpenAI, Gemini. Swap provider = change one parameter.
+
+## Installation
+
+```ruby
+# Gemfile
+gem "ruby_llm"
+```
+
+```bash
+bundle install
+```
+
+## Configuration
+
+API keys via ENV vars (or Rails credentials, then map to ENV):
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM.configure do |config|
+  config.anthropic_api_key = ENV.fetch("ANTHROPIC_API_KEY", nil)
+  config.openai_api_key = ENV.fetch("OPENAI_API_KEY", nil)
+end
+```
+
+Only configure providers you use. Set ENV vars via `.env` in dev, Kamal secrets in production.
+
+## Rails Integration (Generators)
+
+If you want full chat UI out of the box:
+```bash
+bin/rails generate ruby_llm:install      # ActiveRecord Chat + Message models
+bin/rails generate ruby_llm:chat_ui      # controllers + Turbo streaming views
+```
+
+Access: `http://localhost:3000/chats`.
+
+For custom integration, skip the UI generator and build manually.
 
 ## Basic Usage
 
 ```ruby
-# In Gemfile
-gem "ruby_llm"
-```
-
-```ruby
-# Simple ask
-response = RubyLLM.chat
-  .with_model("claude-opus-4-7")
-  .ask("Halo, apa kabar?")
-
+chat = RubyLLM.chat
+response = chat.ask("What is Ruby on Rails?")
 puts response.content
 ```
 
-API key storage:
-```yaml
-# bin/rails credentials:edit
-anthropic:
-  api_key: sk-ant-xxx...
-openai:
-  api_key: sk-xxx...
+Response is a `RubyLLM::Message` with conversation history automatically maintained.
+
+## Model Selection
+
+```ruby
+# On creation
+chat = RubyLLM.chat(model: "claude-sonnet-4-6")
+chat = RubyLLM.chat(model: "claude-haiku")
+chat = RubyLLM.chat(model: "gpt-5-nano")
+chat = RubyLLM.chat(model: "gemini-3.1-pro-preview")
+
+# Change model on existing chat
+chat.with_model("claude-sonnet-4-6")
 ```
 
-Access: `Rails.application.credentials.dig(:anthropic, :api_key)` — gem handles automatically if following convention.
+## System Prompt / Instructions
+
+```ruby
+chat = RubyLLM.chat
+chat.with_instructions("You are a helpful finance assistant...")
+chat.ask("What's my biggest expense category?")
+
+# Replace
+chat.with_instructions("New instruction here")
+
+# Append
+chat.with_instructions("Answer in one paragraph.", append: true)
+```
+
+## Streaming Response (Block Syntax)
+
+```ruby
+chat = RubyLLM.chat(model: "claude-sonnet-4-6")
+
+final = chat.ask("Explain Rails in 3 paragraphs") do |chunk|
+  print chunk.content  # fires per token/chunk
+end
+
+puts final.content  # full accumulated response
+```
+
+Chunk attributes: `content`, `role`, `model_id`, `tool_calls`, `input_tokens`, `output_tokens`.
+
+### Rails Turbo Stream Integration
+```ruby
+class ChatStreamJob < ApplicationJob
+  def perform(chat_id, user_message, stream_target_id)
+    chat = Chat.find(chat_id)
+    full_response = ""
+
+    chat.ask(user_message) do |chunk|
+      full_response << (chunk.content || "")
+      Turbo::StreamsChannel.broadcast_replace_to(
+        "chat_#{chat.id}",
+        target: stream_target_id,
+        partial: "messages/streaming_message",
+        locals: { content: full_response }
+      )
+    end
+  end
+end
+```
+
+## Structured Output (Schema)
+
+```ruby
+# Class-based
+class TransactionCategorySchema < RubyLLM::Schema
+  string :category, description: "Category: food, transport, entertainment"
+  number :confidence, description: "Confidence 0.0-1.0"
+end
+
+chat = RubyLLM.chat(model: "claude-haiku")
+response = chat.with_schema(TransactionCategorySchema)
+  .ask("Classify: 'Kopi Starbucks 50K'")
+
+# response.content matches schema structure
+```
+
+Or manual Hash schema:
+```ruby
+schema = {
+  type: "object",
+  properties: {
+    category: { type: "string", enum: %w[food transport entertainment] },
+    confidence: { type: "number" }
+  },
+  required: %w[category confidence]
+}
+chat.with_schema(schema).ask("Classify: ...")
+```
+
+Remove schema: `chat.with_schema(nil)`.
 
 ## Cost-Aware Model Selection
 
-Pick cheapest model that solves task:
+Pick cheapest model per task:
 
-| Task | Model | Cost |
+| Task | Model | Relative cost |
 |---|---|---|
-| Classification (auto-categorize) | `claude-haiku-4-5` | ~$1/1M input tokens |
-| Chat with reasoning | `claude-sonnet-4-6` | ~$3/1M input tokens |
-| Complex reasoning | `claude-opus-4-7` | ~$15/1M input tokens |
+| Classification | `claude-haiku` | $ |
+| Chat with reasoning | `claude-sonnet-4-6` | $$ |
+| Complex reasoning | `claude-opus-4-7` | $$$ |
 
+Token tracking on response:
 ```ruby
-# Cheap classification
-category = RubyLLM.chat.with_model("claude-haiku-4-5")
-  .ask("Category for: '#{description}' from: food, transport, entertainment")
-
-# Reasoning chat
-answer = RubyLLM.chat.with_model("claude-sonnet-4-6")
-  .with_context(user_data)
-  .ask(question)
+response = chat.ask("...")
+puts "Input: #{response.input_tokens}, Output: #{response.output_tokens}"
 ```
 
-## Streaming Response (via Turbo Stream)
+Use for monthly cost math: `total_tokens × model_price_per_token × users`.
 
-Pattern: AI streams tokens → Turbo Stream broadcasts to view → user sees live typing.
+## Conversation History
+
+Auto-maintained by Chat instance:
+```ruby
+chat.ask("Initial question")
+chat.ask("Follow-up")  # has context of prior exchange
+chat.messages.each { |m| puts "[#{m.role.to_s.upcase}] #{m.content}" }
+```
+
+Manual message:
+```ruby
+chat.add_message(role: :system, content: raw_block)
+```
+
+## Event Handlers
 
 ```ruby
-class ChatController < ApplicationController
-  def create
-    message = @chat.messages.create!(role: "user", content: params[:prompt])
-    StreamAiResponseJob.perform_later(@chat, message)
-    redirect_to chat_path(@chat)
-  end
-end
+chat.on_new_message { print "Assistant > " }
+chat.on_end_message { |msg| puts "Complete!" }
+```
 
-class StreamAiResponseJob < ApplicationJob
-  def perform(chat, user_message)
-    assistant_message = chat.messages.create!(role: "assistant", content: "")
+## Graceful Degradation
 
-    RubyLLM.chat
-      .with_model("claude-sonnet-4-6")
-      .with_context(chat.context)
-      .stream(user_message.content) do |chunk|
-        assistant_message.update!(content: assistant_message.content + chunk.content)
-        Turbo::StreamsChannel.broadcast_append_to(
-          chat, target: "message_#{assistant_message.id}",
-          html: chunk.content
-        )
-      end
-  end
+External API = can fail. Never block core functionality:
+```ruby
+def auto_categorize!
+  return if category.present?
+
+  category_result = RubyLLM.chat(model: "claude-haiku")
+    .ask("Category for: #{description}")
+  update(category: category_result.content.strip)
+rescue RubyLLM::Error => e
+  Rails.logger.warn "AI categorize failed: #{e.message}"
+  # Fallback: leave blank, user inputs manually
 end
 ```
 
@@ -103,52 +216,15 @@ class ChatController < ApplicationController
 end
 ```
 
-Reflect budget constraint (e.g., 50 calls/day × user = manageable monthly cost).
-
-## Graceful Degradation
-
-External API = not always available. Never block core functionality:
-
-```ruby
-class Transaction < ApplicationRecord
-  def auto_categorize!
-    return if category.present?
-
-    category = RubyLLM.chat.with_model("claude-haiku-4-5")
-      .ask("Category for: #{description}")
-    update(category: category.content.strip)
-  rescue RubyLLM::Error => e
-    Rails.logger.warn "AI categorize failed: #{e.message}"
-    # Fallback: user inputs category manually via form
-  end
-end
-```
-
-## Structured Output
-
-For classification / data extraction:
-```ruby
-response = RubyLLM.chat.with_model("claude-haiku-4-5")
-  .with_schema({
-    type: "object",
-    properties: {
-      category: { type: "string", enum: ["food", "transport", "entertainment"] },
-      confidence: { type: "number" }
-    }
-  })
-  .ask("Classify: #{description}")
-
-# response.content is parsed JSON matching schema
-```
-
 ## Anti-Patterns
 
-- ❌ `Net::HTTP.post` directly to API — use RubyLLM
-- ❌ Hardcoding API key in code — use Rails credentials
+- ❌ `Net::HTTP.post` directly — use RubyLLM
+- ❌ Hardcoding API key — use ENV or Rails credentials
 - ❌ Always using Opus — use Haiku for simple tasks
-- ❌ No rate limit — users can drain budget
-- ❌ No fallback when API down — user sees broken app
+- ❌ No rate limit — users drain budget
+- ❌ No fallback on API failure — broken UX
 
 ## References
 
-- `references/ai-llm.md` — Command pattern, cost tracking, tool patterns
+- `references/ai-llm.md` — command pattern, cost tracking, tool patterns (37signals style)
+- Official docs: https://rubyllm.com/
