@@ -46,14 +46,15 @@ Quarterly update cycle tracking changes to Rails / Claude Code / Kamal / Mayar.
 
 ---
 
-## 16 Skills Inside
+## 17 Skills Inside
 
 Each skill auto-invokes based on trigger keywords in your prompts.
 
-## Main Skills (14)
+## Main Skills (15)
 
 ### Planning
 - **`prd-writing`** — 9-section PRD template. The single most important habit for vibecoding — 20 min of PRD saves 2 hours of rework. "Think first, prompt second."
+- **`schema-design-flow`** — Socratic interrogation before any migration ("who creates this? who sees it? what lifecycle?"). State-as-records patterns from 37signals Fizzy. Platform-agnostic across SQLite / MySQL / PostgreSQL.
 
 ### Rails Backend
 - **`rails-conventions`** — DHH-style patterns (fat models, skinny controllers, REST purity, prefer Rails built-in over gems)
@@ -93,7 +94,7 @@ Opt-in skills for DHH-style purists or advanced infrastructure needs. Not auto-i
 
 This plugin is designed as a companion for the **BelajarGPT Vibecoding** course — teaching non-programmer Indonesians to ship real Rails 8 apps using Claude Code.
 
-The plugin carries the technical load (14 main skills auto-invoked). Students focus on **PRD + product thinking**. AI writes the code, student guides + verifies.
+The plugin carries the technical load (15 main skills auto-invoked). Students focus on **PRD + product thinking**. AI writes the code, student guides + verifies.
 
 Learn more: [BelajarGPT Vibecoding](https://belajargpt.co/vibecoding)
 

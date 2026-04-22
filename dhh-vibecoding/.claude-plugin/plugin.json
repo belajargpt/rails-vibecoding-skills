@@ -1,7 +1,7 @@
 {
   "name": "dhh-vibecoding",
-  "version": "0.4.0",
-  "description": "Vibecoding with the DHH philosophy. 16 skills distilled from 37signals' Fizzy, Campfire, and Writebook — zero build tools, no devise, no Sidekiq, no Redis. Teaches Claude Code to write Rails 8 + Hotwire + Solid Suite + Kamal apps the DHH way. Main skills cover PRD writing, Rails conventions, Turbo, Stimulus, Tailwind, auth, Active Storage, Solid Suite, Kamal, Mayar payments, RubyLLM. Extras skills cover vanilla CSS (DHH-style) and advanced VPS hardening (Tailscale + Cloudflare).",
+  "version": "0.5.0",
+  "description": "Vibecoding with the DHH philosophy. 17 skills distilled from 37signals' Fizzy, Campfire, and Writebook — zero build tools, no devise, no Sidekiq, no Redis. Teaches Claude Code to write Rails 8 + Hotwire + Solid Suite + Kamal apps the DHH way. Main skills cover PRD writing, Rails conventions, schema design (Socratic interrogation flow), Turbo, Stimulus, Tailwind, auth, Active Storage, Solid Suite, Kamal, Mayar payments, RubyLLM. Extras skills cover vanilla CSS (DHH-style) and advanced VPS hardening (Tailscale + Cloudflare).",
   "author": {
     "name": "BelajarGPT",
     "url": "https://belajargpt.co"

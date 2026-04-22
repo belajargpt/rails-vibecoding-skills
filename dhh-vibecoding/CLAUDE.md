@@ -93,12 +93,13 @@ User has 1 VPS hosting N apps via Kamal proxy + subdomains.
 
 ## The Skill Catalog
 
-16 skills total. Main skills auto-invoke on matching triggers; extras are opt-in for advanced users.
+17 skills total. Main skills auto-invoke on matching triggers; extras are opt-in for advanced users.
 
-### Main Skills (14)
+### Main Skills (15)
 
 **Planning:**
 - `prd-writing` — 9-section PRD template, "think first, prompt second"
+- `schema-design-flow` — Socratic interrogation before any migration (Fizzy state-as-records pattern, platform-agnostic)
 
 **Rails backend:**
 - `rails-conventions` — fat models, skinny controllers, REST purity
