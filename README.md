@@ -46,7 +46,7 @@ Quarterly update cycle tracking changes to Rails / Claude Code / Kamal / Mayar.
 
 ---
 
-## 10 Skills Inside
+## 11 Skills Inside
 
 Each skill auto-invokes based on trigger keywords in your prompts.
 
@@ -63,6 +63,9 @@ Each skill auto-invokes based on trigger keywords in your prompts.
 
 ### Presentation
 - **`vanilla-css`** — cascade layers, OKLCH colors, CSS variables, `:has()`, `@starting-style`, native nesting — zero build tools
+
+### Infrastructure
+- **`vps-provisioning`** — SSH lockdown + Tailscale + UFW + Docker port discipline + Cloudflare-only HTTP/HTTPS (DOCKER-USER iptables) + fail2ban. Ubuntu 24 LTS, Kamal-ready.
 
 ### Integrations
 - **`mayar-payment-integration`** — Mayar hosted checkout + webhook re-fetch pattern (Indonesian payment gateway)

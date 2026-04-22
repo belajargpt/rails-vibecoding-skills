@@ -6,12 +6,12 @@
   },
   "metadata": {
     "description": "Vibecoding with the DHH philosophy — Claude Code plugin marketplace for Rails 8 + Hotwire + Kamal shipping. Distilled from 37signals' Fizzy, Campfire, and Writebook.",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
       "name": "dhh-vibecoding",
-      "description": "10 skills that make Claude Code fluent in DHH-style Rails: rails-conventions, turbo-frames, turbo-streams, stimulus-controllers, vanilla-css, auth-setup, solid-suite-config, rails-debug-helper, mayar-payment-integration, rubyllm-patterns. Zero build tools. No devise. No Sidekiq. No Redis. No Tailwind.",
+      "description": "11 skills that make Claude Code fluent in DHH-style Rails + VPS hardening: rails-conventions, turbo-frames, turbo-streams, stimulus-controllers, vanilla-css, auth-setup, solid-suite-config, rails-debug-helper, vps-provisioning, mayar-payment-integration, rubyllm-patterns. Zero build tools. No devise. No Sidekiq. No Redis. No Tailwind.",
       "author": {
         "name": "BelajarGPT",
         "url": "https://belajargpt.co"
@@ -33,6 +33,9 @@
         "mayar",
         "rubyllm",
         "vanilla-css",
+        "vps-provisioning",
+        "tailscale",
+        "cloudflare",
         "vibecoding",
         "belajargpt",
         "indonesian"

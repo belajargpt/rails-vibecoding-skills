@@ -92,7 +92,7 @@ User has 1 VPS hosting N apps via Kamal proxy + subdomains.
 
 ## The Skill Catalog
 
-10 skills, each auto-invokes when a prompt matches its trigger keywords:
+11 skills, each auto-invokes when a prompt matches its trigger keywords:
 
 **Rails backend:**
 - `rails-conventions` — fat models, skinny controllers, REST purity
@@ -107,6 +107,9 @@ User has 1 VPS hosting N apps via Kamal proxy + subdomains.
 
 **Presentation:**
 - `vanilla-css` — cascade layers, OKLCH, no Tailwind
+
+**Infrastructure:**
+- `vps-provisioning` — SSH lockdown, Tailscale, UFW, Docker port discipline, Cloudflare-only iptables
 
 **Integrations:**
 - `mayar-payment-integration` — Mayar + webhook re-fetch
