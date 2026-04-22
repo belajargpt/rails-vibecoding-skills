@@ -1,6 +1,6 @@
 # DHH Vibecoding Plugin
 
-> Vibecoding dengan filosofi DHH. Distilled from 37signals' Fizzy, Campfire, dan Writebook — production apps yang ship dengan **zero build tools**, **no devise**, **no Sidekiq**, **no Redis**, **no Tailwind**.
+> Vibecoding with the DHH philosophy. Distilled from 37signals' Fizzy, Campfire, and Writebook — production apps shipped with **zero build tools**, **no devise**, **no Sidekiq**, **no Redis**, **no Tailwind**.
 
 *"The best code is the code you don't write. The second best is the code that's obviously correct."* — DHH
 
@@ -8,22 +8,22 @@
 
 ## Philosophy
 
-Dunia vibecoding butuh north star. Kita pilih **DHH sebagai vibecoding prophet**.
+Vibecoding needs a north star. We picked **DHH as the vibecoding prophet**.
 
-**Kenapa?**
-- **Rich domain models > service objects** — AI gak bingung nyari logic di 10 tempat
-- **REST purity** — 1 cara bikin endpoint, AI gak harus invent ulang
-- **Convention over configuration** — less decision fatigue, less token
+**Why?**
+- **Rich domain models > service objects** — AI doesn't get confused hunting logic across 10 places
+- **REST purity** — one way to define endpoints, AI doesn't invent new patterns
+- **Convention over configuration** — less decision fatigue, fewer tokens
 - **Prefer Rails built-in over gems** — fewer dependencies = fewer failure modes
 - **Database-backed everything** — no Redis, no Memcached, Solid Suite ftw
 
-Kami pelajari:
-- **Fizzy** — 37signals kanban app (~14K lines CSS, zero build tools)
+We studied:
+- **Fizzy** — 37signals' kanban app (~14K lines of CSS, zero build tools)
 - **Campfire** & **Writebook** — shipped proofs of DHH's philosophy
 - **Unofficial 37signals Style Guide** — transferable patterns distilled
 - **DHH's PR reviews** — real critique patterns from production codebases
 
-This plugin ships that philosophy as Claude Code skills. Install once → Claude Code kamu jadi fluent di vanilla Rails, vanilla CSS, Hotwire, Solid Suite, Kamal. Prompting kamu lebih ringan, hasil lebih konsisten, decisions di-curate oleh "The DHH Way."
+This plugin ships that philosophy as Claude Code skills. Install once → your Claude Code becomes fluent in vanilla Rails, vanilla CSS, Hotwire, Solid Suite, and Kamal. Your prompts stay light, outputs stay consistent, decisions are curated by "The DHH Way."
 
 Your vibecoding partner learns from the best.
 
@@ -42,7 +42,7 @@ claude plugin install dhh-vibecoding
 claude plugin update dhh-vibecoding
 ```
 
-Quarterly update cycle untuk perubahan Rails / Claude Code / Kamal / Mayar.
+Quarterly update cycle tracking changes to Rails / Claude Code / Kamal / Mayar.
 
 ---
 
@@ -72,9 +72,9 @@ Each skill auto-invokes based on trigger keywords in your prompts.
 
 ## Course Context
 
-Plugin ini dirancang sebagai companion untuk **BelajarGPT Vibecoding** course — teaching non-programmer Indonesian untuk ship real Rails 8 apps pake Claude Code.
+This plugin is designed as a companion for the **BelajarGPT Vibecoding** course — teaching non-programmer Indonesians to ship real Rails 8 apps using Claude Code.
 
-Plugin carries technical load (10 skills auto-invoked). Student fokus ke **PRD + product thinking**. AI nulis code, student arahin + verify.
+The plugin carries the technical load (10 skills auto-invoked). Students focus on **PRD + product thinking**. AI writes the code, student guides + verifies.
 
 Learn more: [BelajarGPT Vibecoding](https://belajargpt.co/vibecoding)
 
@@ -82,7 +82,7 @@ Learn more: [BelajarGPT Vibecoding](https://belajargpt.co/vibecoding)
 
 ## Credits & References
 
-This plugin stands on shoulders of:
+This plugin stands on the shoulders of:
 - **DHH** — for the philosophy
 - **37signals team** (Jason Fried, Jorge Manrubia, Jason Zimdars, et al.) — for shipping Fizzy, Campfire, Writebook as living proofs
 - **Marc Köhlbrugge** — for extracting the patterns in [Unofficial 37signals Coding Style Guide](https://github.com/marckohlbrugge/unofficial-37signals-coding-style-guide)
