@@ -1,6 +1,6 @@
 # DHH Vibecoding Plugin
 
-> Vibecoding with the DHH philosophy. Distilled from 37signals' Fizzy, Campfire, and Writebook — production apps shipped with **zero build tools**, **no devise**, **no Sidekiq**, **no Redis**, **no Tailwind**.
+> Vibecoding with the DHH philosophy. Distilled from 37signals' Fizzy, Campfire, and Writebook — production apps shipped with **zero build tools**, **no devise**, **no Sidekiq**, **no Redis**.
 
 *"The best code is the code you don't write. The second best is the code that's obviously correct."* — DHH
 
@@ -23,7 +23,7 @@ We studied:
 - **Unofficial 37signals Style Guide** — transferable patterns distilled
 - **DHH's PR reviews** — real critique patterns from production codebases
 
-This plugin ships that philosophy as Claude Code skills. Install once → your Claude Code becomes fluent in vanilla Rails, vanilla CSS, Hotwire, Solid Suite, and Kamal. Your prompts stay light, outputs stay consistent, decisions are curated by "The DHH Way."
+This plugin ships that philosophy as Claude Code skills. Install once → your Claude Code becomes fluent in vanilla Rails, Hotwire, Solid Suite, Active Storage, and Kamal. Your prompts stay light, outputs stay consistent, decisions are curated by "The DHH Way."
 
 Your vibecoding partner learns from the best.
 
@@ -46,13 +46,19 @@ Quarterly update cycle tracking changes to Rails / Claude Code / Kamal / Mayar.
 
 ---
 
-## 11 Skills Inside
+## 16 Skills Inside
 
 Each skill auto-invokes based on trigger keywords in your prompts.
+
+## Main Skills (14)
+
+### Planning
+- **`prd-writing`** — 9-section PRD template. The single most important habit for vibecoding — 20 min of PRD saves 2 hours of rework. "Think first, prompt second."
 
 ### Rails Backend
 - **`rails-conventions`** — DHH-style patterns (fat models, skinny controllers, REST purity, prefer Rails built-in over gems)
 - **`auth-setup`** — Rails 8 built-in auth + authorization + Current attributes (no devise, no pundit)
+- **`active-storage`** — file uploads, `has_one_attached` / `has_many_attached`, variants, signed URLs for secure delivery
 - **`solid-suite-config`** — Solid Queue / Cache / Cable setup (no Redis, no Sidekiq)
 - **`rails-debug-helper`** — error diagnosis, log reading, CI tools (Brakeman, Bundler Audit, Rubocop), deploy pre-flight
 
@@ -62,10 +68,11 @@ Each skill auto-invokes based on trigger keywords in your prompts.
 - **`stimulus-controllers`** — client-side behavior sprinkles, 55+ Fizzy patterns catalog
 
 ### Presentation
-- **`vanilla-css`** — cascade layers, OKLCH colors, CSS variables, `:has()`, `@starting-style`, native nesting — zero build tools
+- **`tailwind-patterns`** — Tailwind CSS 4, mobile-first responsive, accessibility (ARIA, focus states), component patterns (button/card/form/nav). Default styling approach for students.
 
 ### Infrastructure
-- **`vps-provisioning`** — SSH lockdown + Tailscale + UFW + Docker port discipline + Cloudflare-only HTTP/HTTPS (DOCKER-USER iptables) + fail2ban. Ubuntu 24 LTS, Kamal-ready.
+- **`vps-basics`** — minimum viable VPS provisioning (SSH key, UFW, swap, Docker, fail2ban). 15-minute setup for v1 apps.
+- **`kamal-deployment`** — Kamal 2 deploy workflow, zero-downtime, deploy.yml config, multi-app subdomain routing, accessories, rollbacks.
 
 ### Integrations
 - **`mayar-payment-integration`** — Mayar hosted checkout + webhook re-fetch pattern (Indonesian payment gateway)
@@ -73,11 +80,20 @@ Each skill auto-invokes based on trigger keywords in your prompts.
 
 ---
 
+## Extras / Advanced (2)
+
+Opt-in skills for DHH-style purists or advanced infrastructure needs. Not auto-invoked unless your prompt explicitly signals the advanced path.
+
+- **`vanilla-css`** — DHH-style vanilla CSS alternative to Tailwind. Cascade layers, OKLCH colors, CSS variables, `:has()`, `@starting-style`, native nesting — zero build tools. For projects that commit to the 37signals styling philosophy.
+- **`vps-provisioning`** — advanced VPS hardening with Tailscale private mesh, Cloudflare-only ingress, DOCKER-USER iptables chain, multi-server mesh. Upgrade from `vps-basics` when threat model demands it.
+
+---
+
 ## Course Context
 
 This plugin is designed as a companion for the **BelajarGPT Vibecoding** course — teaching non-programmer Indonesians to ship real Rails 8 apps using Claude Code.
 
-The plugin carries the technical load (10 skills auto-invoked). Students focus on **PRD + product thinking**. AI writes the code, student guides + verifies.
+The plugin carries the technical load (14 main skills auto-invoked). Students focus on **PRD + product thinking**. AI writes the code, student guides + verifies.
 
 Learn more: [BelajarGPT Vibecoding](https://belajargpt.co/vibecoding)
 
@@ -89,6 +105,8 @@ This plugin stands on the shoulders of:
 - **DHH** — for the philosophy
 - **37signals team** (Jason Fried, Jorge Manrubia, Jason Zimdars, et al.) — for shipping Fizzy, Campfire, Writebook as living proofs
 - **Marc Köhlbrugge** — for extracting the patterns in [Unofficial 37signals Coding Style Guide](https://github.com/marckohlbrugge/unofficial-37signals-coding-style-guide)
+- **Josef Strzibny** — for the Kamal Handbook deep dive on Kamal 2
+- **Thibaut Baissac** — for Tailwind agent patterns reference
 
 We synthesized, verified, and re-expressed these patterns as Claude Code skills. Credit flows upstream.
 
@@ -98,4 +116,4 @@ We synthesized, verified, and re-expressed these patterns as Claude Code skills.
 
 MIT — plugin code is yours to use, modify, share.
 
-Reference content adapted from sources above (O'Saasy licensed code examples; please respect their terms).
+Reference content adapted from sources above (please respect their terms).

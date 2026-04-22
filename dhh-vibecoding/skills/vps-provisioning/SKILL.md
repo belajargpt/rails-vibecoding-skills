@@ -1,11 +1,13 @@
 ---
 name: vps-provisioning
-description: Use when provisioning a fresh VPS (Hetzner, Biznet, DigitalOcean, Ubuntu 24 LTS) for Kamal-based Rails deployments. Applies to SSH lockdown, Tailscale setup, UFW firewall, Docker port discipline, Cloudflare-only HTTP/HTTPS via DOCKER-USER iptables, fail2ban, unattended upgrades, swap configuration, and Kamal deploy config. Triggers when user mentions VPS, server setup, hardening, SSH lockdown, Tailscale, UFW, firewall, iptables, DOCKER-USER, Cloudflare IPs, fail2ban, deploy user, root login disable, password auth disable, port 22, ports 80/443, or Kamal deploy server IP. Critical safety note: Docker bypasses UFW — you need DOCKER-USER iptables chain.
+description: "[EXTRAS / ADVANCED] Use when provisioning a fresh VPS (Hetzner, Biznet, DigitalOcean, Ubuntu 24 LTS) for Kamal-based Rails deployments with advanced hardening. Applies to SSH lockdown, Tailscale private mesh, UFW firewall, Docker port discipline, Cloudflare-only HTTP/HTTPS via DOCKER-USER iptables, fail2ban, unattended upgrades, swap configuration, and Kamal deploy config. Triggers when user mentions advanced VPS hardening, Tailscale, iptables, DOCKER-USER, Cloudflare-only ingress, multi-server mesh, private SSH. Critical safety note: Docker bypasses UFW — you need DOCKER-USER iptables chain. For v1 simple setup, use vps-basics skill instead."
 ---
 
-# VPS Provisioning & Hardening
+# VPS Provisioning & Hardening (Extras / Advanced)
 
-> Step-by-step guide for provisioning and securing a VPS for deploying web apps with Docker, Kamal, Cloudflare, and Tailscale. Based on Ubuntu 24 LTS.
+> **This is an extras skill.** Most students should use `vps-basics` for v1 apps. Come back here when you need Tailscale private mesh, Cloudflare-only ingress, or multi-server networking.
+
+> Step-by-step guide for advanced provisioning and securing of a VPS for deploying web apps with Docker, Kamal, Cloudflare, and Tailscale. Based on Ubuntu 24 LTS.
 
 ## 10 Principles
 

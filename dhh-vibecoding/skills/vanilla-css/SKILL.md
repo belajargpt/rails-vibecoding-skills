@@ -1,9 +1,11 @@
 ---
 name: vanilla-css
-description: Use when writing CSS for Rails apps without Tailwind, Sass, PostCSS, or any build tools. Applies to CSS architecture, cascade layers, CSS variables, OKLCH colors, dark mode theming, native nesting, :has() selector, @starting-style, container queries, component styling, utility classes, responsive design, and modern CSS features. Triggers when user mentions CSS, styling, vanilla CSS, cascade layers, custom properties, dark mode, OKLCH, Tailwind alternative, native nesting, CSS-in-JS alternative, or responsive design. Philosophy from 37signals (Campfire, Writebook, Fizzy — 14K lines zero build tools).
+description: "[EXTRAS / ADVANCED] Use when writing CSS for Rails apps without Tailwind, Sass, PostCSS, or any build tools. Applies to CSS architecture, cascade layers, CSS variables, OKLCH colors, dark mode theming, native nesting, :has() selector, @starting-style, container queries, component styling, utility classes, responsive design, and modern CSS features. Triggers when user mentions CSS, styling, vanilla CSS, cascade layers, custom properties, dark mode, OKLCH, Tailwind alternative, native nesting, CSS-in-JS alternative, or responsive design. Philosophy from 37signals (Campfire, Writebook, Fizzy — 14K lines zero build tools). Most students should use tailwind-patterns skill instead; this is for DHH-style purists."
 ---
 
-# Vanilla CSS — 37signals Style
+# Vanilla CSS — 37signals Style (Extras / Advanced)
+
+> **This is an extras skill.** Most students should use `tailwind-patterns` for v1 apps. Come back here when you want the DHH-style vanilla CSS philosophy — no build tools, pure cascade, modern browser features.
 
 > Patterns verified against 37signals Fizzy production code + article *"Vanilla CSS Is All You Need"* (zolkos.com).
 

@@ -22,12 +22,12 @@ This isn't dogma — it's proof. 37signals ships Fizzy (kanban), Campfire (chat)
 |---|---|---|
 | Framework | **Rails 8.1** | Majestic monolith, opinionated |
 | Frontend | **Hotwire (Turbo + Stimulus)** + importmap | No JS toolchain, HTML as wire protocol |
-| CSS | **Vanilla CSS** (no Sass, no Tailwind) | Modern CSS is plenty (layers, OKLCH, `:has()`) |
+| CSS | **Tailwind CSS 4** (default) / Vanilla CSS (extras) | Tailwind for fast shipping; vanilla for DHH purists |
 | Database | **SQLite + Litestream** | Zero DB ops, file-based |
 | Queue / Cache / Cable | **Solid Queue / Cache / Cable** | Database-backed, no Redis |
+| File storage | **Active Storage** (local disk v1, R2 optional) | Rails built-in, simple upgrade path |
 | Deployment | **Kamal 2** → VPS | Own infrastructure, Docker-based |
 | Payment | **Mayar** (Indonesia-native) | Hosted checkout, webhook re-fetch pattern |
-| Cloud storage | **Local filesystem** (v1) / R2 optional | Simplicity first |
 | LLM integration | **RubyLLM gem** | Provider-agnostic, streaming, cost-aware |
 | Primary AI tool | **Claude Code** | The developer's coding partner |
 
@@ -41,8 +41,9 @@ This isn't dogma — it's proof. 37signals ships Fizzy (kanban), Campfire (chat)
 - ❌ **GraphQL** — REST with Turbo is sufficient
 - ❌ **factory_bot** — fixtures are simpler
 - ❌ **rspec** — Minitest ships with Rails
-- ❌ **Tailwind CSS** — vanilla CSS with layers + OKLCH
-- ❌ **Sass / PostCSS** — modern native CSS replaces them
+- ❌ **Sass / PostCSS** — modern native CSS (or Tailwind 4) replaces them
+
+Note: Tailwind CSS is the default styling approach for students (fast shipping), with vanilla CSS available as an extras skill for DHH-style purists. Pick one per project.
 
 When generating Rails code, default to these omissions. Don't suggest them as alternatives.
 
@@ -62,7 +63,7 @@ When generating Rails code, default to these omissions. Don't suggest them as al
 
 7. **No SMTP dependency.** Password reset → admin panel. Digital delivery → on-screen signed URL.
 
-8. **Active Storage = local filesystem.** VPS disk is sufficient for v1. Mention R2 as an upgrade path, don't configure by default.
+8. **Active Storage = local filesystem.** VPS disk is sufficient for v1. Mention R2 as an upgrade path, don't configure by default. Remember Kamal persistent volume or deploys lose files.
 
 ## User Context
 
@@ -92,11 +93,17 @@ User has 1 VPS hosting N apps via Kamal proxy + subdomains.
 
 ## The Skill Catalog
 
-11 skills, each auto-invokes when a prompt matches its trigger keywords:
+16 skills total. Main skills auto-invoke on matching triggers; extras are opt-in for advanced users.
+
+### Main Skills (14)
+
+**Planning:**
+- `prd-writing` — 9-section PRD template, "think first, prompt second"
 
 **Rails backend:**
 - `rails-conventions` — fat models, skinny controllers, REST purity
 - `auth-setup` — Rails 8 auth, Current attributes, permission isolation
+- `active-storage` — file uploads, variants, signed URLs
 - `solid-suite-config` — Queue / Cache / Cable (Redis-free)
 - `rails-debug-helper` — error diagnosis, CI tools, pre-flight
 
@@ -106,14 +113,22 @@ User has 1 VPS hosting N apps via Kamal proxy + subdomains.
 - `stimulus-controllers` — client-side behavior
 
 **Presentation:**
-- `vanilla-css` — cascade layers, OKLCH, no Tailwind
+- `tailwind-patterns` — mobile-first, accessibility, utility classes (default for students)
 
 **Infrastructure:**
-- `vps-provisioning` — SSH lockdown, Tailscale, UFW, Docker port discipline, Cloudflare-only iptables
+- `vps-basics` — minimum viable VPS provisioning for v1 apps
+- `kamal-deployment` — Kamal 2 deploys, zero-downtime, multi-app routing
 
 **Integrations:**
 - `mayar-payment-integration` — Mayar + webhook re-fetch
 - `rubyllm-patterns` — LLM APIs via RubyLLM gem
+
+### Extras / Advanced (2)
+
+Opt-in skills for DHH-style purists or advanced infrastructure needs:
+
+- `vanilla-css` — cascade layers, OKLCH, no build tools (DHH-style CSS)
+- `vps-provisioning` — Tailscale + Cloudflare + iptables hardening
 
 Each skill has detailed references from 37signals' Fizzy codebase + verified official docs.
 
